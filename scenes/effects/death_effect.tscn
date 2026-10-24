@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/effects/burst.gd" id="1_script"]
+
+[sub_resource type="CanvasItemMaterial" id="Material_glow"]
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_death"]
+colors = PackedColorArray(0.72, 0.89, 1, 0.9, 0.25, 0.45, 0.65, 0)
+
+[node name="DeathEffect" type="CPUParticles2D"]
+material = SubResource("Material_glow")
+emitting = false
+amount = 20
+lifetime = 0.45
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, -12)
+initial_velocity_min = 25.0
+initial_velocity_max = 95.0
+scale_amount_min = 1.0
+scale_amount_max = 3.5
+color_ramp = SubResource("Gradient_death")
+script = ExtResource("1_script")

@@ -1,0 +1,98 @@
+[gd_scene load_steps=6 format=3]
+[ext_resource type="Script" path="res://scripts/ui/upgrade_menu.gd" id="1"]
+[sub_resource type="StyleBoxFlat" id="Normal"]
+bg_color = Color(0.07, 0.12, 0.17, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.33, 0.43, 0.47, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_left = 6
+corner_radius_bottom_right = 6
+[sub_resource type="StyleBoxFlat" id="Hover"]
+bg_color = Color(0.12, 0.19, 0.24, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.83, 0.72, 0.47, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_left = 6
+corner_radius_bottom_right = 6
+[sub_resource type="StyleBoxFlat" id="Focus"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.86, 0.75, 0.48, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_left = 6
+corner_radius_bottom_right = 6
+[sub_resource type="Theme" id="Theme"]
+Button/font_sizes/font_size = 17
+Button/colors/font_color = Color(0.9, 0.89, 0.8, 1)
+Button/styles/normal = SubResource("Normal")
+Button/styles/hover = SubResource("Hover")
+Button/styles/pressed = SubResource("Hover")
+Button/styles/focus = SubResource("Focus")
+[node name="UpgradeMenu" type="Control"]
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme")
+script = ExtResource("1")
+[node name="Shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.02, 0.04, 0.065, 0.9)
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+[node name="Content" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 26
+[node name="Heading" type="Label" parent="Center/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.87, 0.7, 1)
+theme_override_font_sizes/font_size = 27
+text = "THE LIGHT GROWS"
+horizontal_alignment = 1
+[node name="Hint" type="Label" parent="Center/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.64, 0.75, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+text = "Choose one blessing for this run."
+horizontal_alignment = 1
+[node name="Cards" type="HBoxContainer" parent="Center/Content"]
+layout_mode = 2
+theme_override_constants/separation = 20
+[node name="First" type="Button" parent="Center/Content/Cards"]
+custom_minimum_size = Vector2(280, 230)
+layout_mode = 2
+[node name="Second" type="Button" parent="Center/Content/Cards"]
+custom_minimum_size = Vector2(280, 230)
+layout_mode = 2
+[node name="Third" type="Button" parent="Center/Content/Cards"]
+custom_minimum_size = Vector2(280, 230)
+layout_mode = 2
+[node name="Controls" type="Label" parent="Center/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.7, 0.76, 1)
+theme_override_font_sizes/font_size = 14
+text = "Click a card  /  Press 1, 2, or 3"
+horizontal_alignment = 1

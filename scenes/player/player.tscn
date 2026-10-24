@@ -1,0 +1,81 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_player"]
+[ext_resource type="Texture2D" path="res://assets/sprites/keeper.svg" id="2_keeper"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/light_orb.tscn" id="3_weapon"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/halo.tscn" id="4_halo"]
+[ext_resource type="PackedScene" path="res://scenes/weapons/frost_pulse.tscn" id="5_frost"]
+
+[sub_resource type="CircleShape2D" id="Circle_player"]
+radius = 10.0
+
+[sub_resource type="CircleShape2D" id="Circle_hurtbox"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="Circle_pickup"]
+radius = 96.0
+
+[sub_resource type="Gradient" id="Gradient_lantern"]
+offsets = PackedFloat32Array(0, 0.25, 0.65, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.72, 0.72, 0.72, 1, 0.16, 0.16, 0.16, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="Texture_lantern"]
+gradient = SubResource("Gradient_lantern")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+collision_layer = 2
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("1_player")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
+texture = ExtResource("2_keeper")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("Circle_player")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("Circle_hurtbox")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(16, -12)
+color = Color(1, 0.76, 0.42, 1)
+energy = 1.35
+texture = SubResource("Texture_lantern")
+texture_scale = 1.15
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 32
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("Circle_pickup")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+limit_left = -2200
+limit_top = -1600
+limit_right = 2200
+limit_bottom = 1600
+limit_smoothed = true
+
+[node name="WeaponPivot" type="Node2D" parent="."]
+
+[node name="LightOrb" parent="WeaponPivot" instance=ExtResource("3_weapon")]
+
+[node name="Halo" parent="WeaponPivot" instance=ExtResource("4_halo")]
+
+[node name="FrostPulse" parent="WeaponPivot" instance=ExtResource("5_frost")]

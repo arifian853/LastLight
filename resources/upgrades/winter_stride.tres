@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/progression/upgrade_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"winter_stride"
+display_name = "Winter Stride"
+description = "+20% movement speed.\nLeave the shadows behind."
+max_level = 5
+upgrade_type = 2
+value = 0.2

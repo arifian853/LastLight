@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3]
+[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_base.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/enemies/boss.gd" id="2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/pale_one.svg" id="3"]
+[sub_resource type="CircleShape2D" id="Body"]
+radius = 34.0
+[sub_resource type="CircleShape2D" id="Contact"]
+radius = 44.0
+[node name="ThePaleOne" instance=ExtResource("1")]
+script = ExtResource("2")
+display_name = "The Pale One"
+max_health = 2000.0
+movement_speed = 45.0
+contact_damage = 25.0
+experience_value = 25
+[node name="Sprite2D" parent="." index="0"]
+position = Vector2(0, -78)
+texture = ExtResource("3")
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("Body")
+[node name="CollisionShape2D" parent="ContactArea" index="0"]
+shape = SubResource("Contact")

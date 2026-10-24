@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/progression/upgrade_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"moons_reach"
+display_name = "Moon's Reach"
+description = "+15% pickup radius.\nGather the scattered light."
+max_level = 0
+upgrade_type = 4
+value = 0.15

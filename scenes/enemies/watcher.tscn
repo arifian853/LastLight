@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/enemy_base.tscn" id="1_base"]
+[ext_resource type="Texture2D" path="res://assets/sprites/watcher.svg" id="2_art"]
+
+[node name="Watcher" instance=ExtResource("1_base")]
+display_name = "Watcher"
+max_health = 60.0
+movement_speed = 60.0
+contact_damage = 20.0
+experience_value = 3
+
+[node name="Sprite2D" parent="." index="0"]
+position = Vector2(0, -32)
+texture = ExtResource("2_art")

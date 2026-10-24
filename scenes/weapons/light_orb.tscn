@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/weapons/light_orb.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/light_orb.svg" id="2_art"]
+
+[sub_resource type="CanvasItemMaterial" id="Material_glow"]
+light_mode = 1
+
+[node name="LightOrb" type="Node2D"]
+position = Vector2(24, -36)
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("Material_glow")
+texture = ExtResource("2_art")

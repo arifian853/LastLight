@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+[ext_resource type="Script" path="res://scripts/progression/upgrade_data.gd" id="1"]
+[resource]
+script = ExtResource("1")
+id = &"deep_freeze"
+display_name = "Deep Freeze"
+description = "+20% Frost Pulse damage.\nA winter colder than death."
+max_level = 5
+upgrade_type = 7
+value = 0.2

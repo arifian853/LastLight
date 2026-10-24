@@ -1,0 +1,303 @@
+[gd_scene load_steps=18 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/winter_arena.gd" id="1_arena"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/effects/snow_particles.tscn" id="3_snow"]
+[ext_resource type="Shader" path="res://assets/shaders/winter_vignette.gdshader" id="4_vignette"]
+[ext_resource type="Script" path="res://scripts/game/game_manager.gd" id="5_game"]
+[ext_resource type="Script" path="res://scripts/game/spawn_manager.gd" id="6_spawn"]
+[ext_resource type="Script" path="res://scripts/progression/experience_manager.gd" id="7_xp"]
+[ext_resource type="Script" path="res://scripts/progression/upgrade_manager.gd" id="8_upgrades"]
+[ext_resource type="PackedScene" path="res://scenes/ui/upgrade_menu.tscn" id="9_menu"]
+[ext_resource type="Script" path="res://scripts/game/difficulty_manager.gd" id="10_difficulty"]
+[ext_resource type="PackedScene" path="res://scenes/main/result_screen.tscn" id="11_result"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="12_pause"]
+[ext_resource type="PackedScene" path="res://scenes/audio/audio.tscn" id="13_audio"]
+
+[sub_resource type="ShaderMaterial" id="Material_vignette"]
+shader = ExtResource("4_vignette")
+
+[sub_resource type="StyleBoxFlat" id="Style_health_bg"]
+bg_color = Color(0.05, 0.09, 0.14, 0.9)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+
+[sub_resource type="StyleBoxFlat" id="Style_health_fill"]
+bg_color = Color(0.77, 0.65, 0.4, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+
+[sub_resource type="StyleBoxFlat" id="Style_xp_fill"]
+bg_color = Color(0.48, 0.72, 0.81, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_left = 3
+corner_radius_bottom_right = 3
+
+[node name="Game" type="Node2D"]
+script = ExtResource("5_game")
+
+[node name="SpawnManager" type="Node" parent="."]
+script = ExtResource("6_spawn")
+
+[node name="ExperienceManager" type="Node" parent="."]
+script = ExtResource("7_xp")
+
+[node name="UpgradeManager" type="Node" parent="."]
+script = ExtResource("8_upgrades")
+
+[node name="DifficultyManager" type="Node" parent="."]
+script = ExtResource("10_difficulty")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="EnemyProjectileContainer" type="Node2D" parent="World" groups=["enemy_projectile_container"]]
+z_index = 2
+
+[node name="ProjectileContainer" type="Node2D" parent="World" groups=["projectile_container"]]
+z_index = 2
+
+[node name="EffectContainer" type="Node2D" parent="World" groups=["effect_container"]]
+z_index = 3
+
+[node name="PickupContainer" type="Node2D" parent="World"]
+z_index = 1
+
+[node name="Background" type="Node2D" parent="World"]
+script = ExtResource("1_arena")
+
+[node name="Environment" type="Node2D" parent="World"]
+y_sort_enabled = true
+
+[node name="EnemyContainer" type="Node2D" parent="World/Environment"]
+y_sort_enabled = true
+
+[node name="Player" parent="World/Environment" instance=ExtResource("2_player")]
+
+[node name="SnowParticles" parent="World/Environment/Player" instance=ExtResource("3_snow")]
+
+[node name="CanvasModulate" type="CanvasModulate" parent="World"]
+color = Color(0.54, 0.66, 0.79, 1)
+
+[node name="Atmosphere" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Vignette" type="ColorRect" parent="Atmosphere"]
+material = SubResource("Material_vignette")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="Layout" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="HUD/Layout"]
+offset_left = 40.0
+offset_top = 28.0
+offset_right = 400.0
+offset_bottom = 65.0
+theme_override_colors/font_color = Color(0.9, 0.9, 0.83, 1)
+theme_override_font_sizes/font_size = 28
+text = "L A S T  L I G H T"
+
+[node name="Subtitle" type="Label" parent="HUD/Layout"]
+offset_left = 42.0
+offset_top = 69.0
+offset_right = 400.0
+offset_bottom = 90.0
+theme_override_colors/font_color = Color(0.57, 0.69, 0.74, 1)
+theme_override_font_sizes/font_size = 12
+text = "T H E  L O N G  W I N T E R"
+
+[node name="Accent" type="ColorRect" parent="HUD/Layout"]
+offset_left = 42.0
+offset_top = 106.0
+offset_right = 83.0
+offset_bottom = 108.0
+mouse_filter = 2
+color = Color(0.79, 0.66, 0.4, 0.8)
+
+[node name="Objective" type="Label" parent="HUD/Layout"]
+layout_mode = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -330.0
+offset_top = 36.0
+offset_right = -40.0
+offset_bottom = 63.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.83, 0.79, 0.65, 1)
+theme_override_font_sizes/font_size = 16
+text = "Keep moving. The light will fight."
+horizontal_alignment = 2
+
+[node name="Controls" type="Label" parent="HUD/Layout"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 42.0
+offset_top = -60.0
+offset_right = 460.0
+offset_bottom = -35.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.67, 0.76, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "W A S D  /  ↑ ↓ ← →     Move"
+
+[node name="HealthLabel" type="Label" parent="HUD/Layout"]
+offset_left = 42.0
+offset_top = 123.0
+offset_right = 340.0
+offset_bottom = 145.0
+theme_override_colors/font_color = Color(0.84, 0.84, 0.75, 1)
+theme_override_font_sizes/font_size = 12
+text = "LANTERN KEEPER   100 / 100"
+
+[node name="HealthBar" type="ProgressBar" parent="HUD/Layout"]
+offset_left = 42.0
+offset_top = 153.0
+offset_right = 262.0
+offset_bottom = 161.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("Style_health_bg")
+theme_override_styles/fill = SubResource("Style_health_fill")
+value = 100.0
+show_percentage = false
+
+[node name="DeathOverlay" parent="HUD/Layout" instance=ExtResource("11_result")]
+
+[node name="ExperienceLabel" type="Label" parent="HUD/Layout"]
+offset_left = 42.0
+offset_top = 176.0
+offset_right = 400.0
+offset_bottom = 199.0
+theme_override_colors/font_color = Color(0.64, 0.78, 0.84, 1)
+theme_override_font_sizes/font_size = 12
+text = "LEVEL 1    LIGHT SHARDS  0 / 6"
+
+[node name="ExperienceBar" type="ProgressBar" parent="HUD/Layout"]
+offset_left = 42.0
+offset_top = 205.0
+offset_right = 262.0
+offset_bottom = 211.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("Style_health_bg")
+theme_override_styles/fill = SubResource("Style_xp_fill")
+max_value = 6.0
+show_percentage = false
+
+[node name="UpgradeMenu" parent="HUD/Layout" instance=ExtResource("9_menu")]
+z_index = 20
+
+[node name="SurvivalTimer" type="Label" parent="HUD/Layout"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -240.0
+offset_top = 80.0
+offset_right = -42.0
+offset_bottom = 118.0
+theme_override_colors/font_color = Color(0.9, 0.88, 0.76, 1)
+theme_override_font_sizes/font_size = 30
+text = "00:00"
+horizontal_alignment = 2
+
+[node name="PressureLabel" type="Label" parent="HUD/Layout"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 123.0
+offset_right = -42.0
+offset_bottom = 148.0
+theme_override_colors/font_color = Color(0.61, 0.73, 0.79, 1)
+theme_override_font_sizes/font_size = 12
+text = "FIRST SHADOWS"
+horizontal_alignment = 2
+
+[node name="PauseMenu" parent="HUD/Layout" instance=ExtResource("12_pause")]
+
+[node name="KillCount" type="Label" parent="HUD/Layout"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -350.0
+offset_top = -60.0
+offset_right = -42.0
+offset_bottom = -35.0
+theme_override_colors/font_color = Color(0.67, 0.76, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "SHADOWS BANISHED  0"
+horizontal_alignment = 2
+
+[node name="BossPanel" type="VBoxContainer" parent="HUD/Layout"]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -210.0
+offset_top = 30.0
+offset_right = 210.0
+offset_bottom = 80.0
+theme_override_constants/separation = 10
+
+[node name="Name" type="Label" parent="HUD/Layout/BossPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.8, 0.97, 1)
+theme_override_font_sizes/font_size = 15
+text = "T H E  P A L E  O N E"
+horizontal_alignment = 1
+
+[node name="Health" type="ProgressBar" parent="HUD/Layout/BossPanel"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("Style_health_bg")
+theme_override_styles/fill = SubResource("Style_health_fill")
+show_percentage = false
+
+[node name="BossNotice" type="Label" parent="HUD/Layout"]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 100.0
+offset_right = 300.0
+offset_bottom = 140.0
+theme_override_colors/font_color = Color(0.9, 0.82, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "THE PALE ONE HAS AWAKENED"
+horizontal_alignment = 1
+
+[node name="DamageFlash" type="ColorRect" parent="HUD/Layout"]
+z_index = 5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.7, 0.17, 0.15, 0)
+
+[node name="Fade" type="ColorRect" parent="HUD/Layout"]
+z_index = 30
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.015, 0.025, 0.04, 1)
+
+[node name="Audio" parent="." instance=ExtResource("13_audio")]
